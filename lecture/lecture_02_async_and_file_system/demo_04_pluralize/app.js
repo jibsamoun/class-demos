@@ -32,6 +32,12 @@ app.get('/api/pluralize', async (req, res) => {
     res.send(pluralWord);
 })
 
+app.get('/favicon.ico', async (req, res) => {
+    res.type("png")
+    let fileContents = await fs.readFile("favicon.ico")
+    res.send(fileContents);
+})
+
 app.listen(3000, () => {
     console.log("Example app listening at http://localhost:3000")
 })
