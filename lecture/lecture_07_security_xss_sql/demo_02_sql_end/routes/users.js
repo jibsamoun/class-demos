@@ -39,6 +39,8 @@ db.serialize(() => {
 router.get('/', function(req, res, next) {
   let nameSearch = req.query.nameSearch
   nameSearch = nameSearch ? nameSearch : ""
+
+  // FIX THE ERROR TO PREVENT SQL INJECTION BELOW
   db.all(`SELECT * FROM people WHERE first_name = "${nameSearch}"`,
     (err, allRows) => {
       if(err){
