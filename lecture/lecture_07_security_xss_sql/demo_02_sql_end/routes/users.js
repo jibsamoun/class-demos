@@ -39,9 +39,7 @@ db.serialize(() => {
 router.get('/', function(req, res, next) {
   let nameSearch = req.query.nameSearch
   nameSearch = nameSearch ? nameSearch : ""
-
-  // FIX the vulnerability
-   db.all(`SELECT * FROM people WHERE first_name = ?`, nameSearch,
+  db.all(`SELECT * FROM people WHERE first_name = "${nameSearch}"`,
     (err, allRows) => {
       if(err){
         console.log("db error: " + err)
@@ -58,7 +56,6 @@ router.get('/', function(req, res, next) {
       res.send(matchingPeople)
     }
   )
-
 });
 
 export default router;
