@@ -1,37 +1,61 @@
+import sqlite3 from 'sqlite3'
 import express from 'express';
-import sqlite3 from 'sqlite3';
-
 var router = express.Router();
 
-// db
+
 let db = new sqlite3.Database(':memory:', (err) => {
-  if (err) {
-    return console.error(err.message);
+  if(err)
+  {
+      return console.error(err.message)
   }
-  console.log('connected')
+  console.log("Connected to the in-memory sqlite database")
 })
 
 db.serialize(() => {
   db
-  .run('CREATE TABLE people(first_name text, last_name text)')
-  .run(`INSERT INTO people(first_name, last_name)
-    VALUES  ("Kristen", "Thayer"),
-            ("Steven", "Universe"),
-            ("Greg", "Universe"),
-            ("Lisa", "Simpson"),
-            ("Agatha", "Harkness")
-  `)
-  .run('CREATE TABLE secret_table(message text)')
-  .run(`INSERT INTO secret_table (message)
-    VALUES  ('The password for Kristen is: pa55w0rd'),
-            ('The treasure is hidden on the 5th floor')
-  `)
-
+      .run('CREATE TABLE people(first_name text, last_name text)')
+      .run(`INSERT INTO people(first_name, last_name)
+            VALUES ("Kristen", "Thayer"),
+                   ("Steven", "Universe"),
+                   ("Greg", "Universe"),
+                   ("Agatha", "Harkness"),
+                   ("Lisa", "Simpson")
+      
+      `)
+  
+      .run('CREATE TABLE secret_table(message text)')
+      .run(`INSERT INTO secret_table(message)
+            VALUES ('The password for Kristen is: pa55w0rd'),
+                   ('The treasure is hidden on the 5th floor.')
+       
+      `)
 })
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  let nameSearch = req.query.nameSearch
+  nameSearch = nameSearch ? nameSearch : ""
+
+  // FIX the vulnerability
+   db.all(`SELECT * FROM people WHERE first_name = ?`, nameSearch,
+    (err, allRows) => {
+      if(err){
+        console.log("db error: " + err)
+        res.send("db error" + err)
+        return
+      }
+      if(!allRows){
+        return ""
+      }
+      let matchingPeople = allRows.map(
+        row => `${row.first_name} ${row.last_name}`
+      ).join("\n")
+      
+      res.send(matchingPeople)
+    }
+  )
+
 });
 
 export default router;
