@@ -17,9 +17,11 @@ db.serialize(() => {
       .run(`INSERT INTO people(first_name, last_name)
             VALUES ("Kristen", "Thayer"),
                    ("Kyle", "Thayer"),
+                   ("Kyle", "Chandler"),
                    ("Steven", "Universe"),
                    ("Greg", "Universe"),
                    ("Agatha", "Harkness"),
+                   ("Agatha", "Christie"),
                    ("Lisa", "Simpson")
       
       `)
