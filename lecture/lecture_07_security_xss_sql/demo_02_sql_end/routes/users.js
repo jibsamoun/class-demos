@@ -16,6 +16,7 @@ db.serialize(() => {
       .run('CREATE TABLE people(first_name text, last_name text)')
       .run(`INSERT INTO people(first_name, last_name)
             VALUES ("Kristen", "Thayer"),
+                   ("Kyle", "Thayer"),
                    ("Steven", "Universe"),
                    ("Greg", "Universe"),
                    ("Agatha", "Harkness"),
@@ -25,7 +26,7 @@ db.serialize(() => {
   
       .run('CREATE TABLE secret_table(message text)')
       .run(`INSERT INTO secret_table(message)
-            VALUES ('The password for Kristen is: pa55w0rd'),
+            VALUES ('The password for Kyle is: pa55w0rd'),
                    ('The treasure is hidden on the 5th floor.')
        
       `)
