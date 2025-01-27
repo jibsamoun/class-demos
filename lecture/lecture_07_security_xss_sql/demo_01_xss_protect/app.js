@@ -12,10 +12,13 @@ const escapeHTML = str => String(str).replace(/[&<>'"]/g,
         '"': '&quot;'
       }[tag]));
 
+// This string mocks what a user might *try* to input on the client side of your site... 
+// you should not allow this/clean it up
 const userInputWithHTML = "Don't allow <em>tags</em> to be <strong>rendered</strong>"
 
-// This function mocks what a user might *try* to input on the client side of your site... 
-// you should not allow this/clean it up
+// This function mocks the unsafe way of doing this: it doesn't clean the string
+// or check if anything vulnerable is in here. When you see it rendered, you'll notice 
+// that user inputted <em> and <strong> remain
 function vulnerableAddUserInput(){
   return `
   <p>
