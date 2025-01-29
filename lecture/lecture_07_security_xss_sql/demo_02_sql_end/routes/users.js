@@ -41,7 +41,10 @@ router.get('/', function(req, res, next) {
   nameSearch = nameSearch ? nameSearch : ""
 
   // FIX THE ERROR TO PREVENT SQL INJECTION BELOW
-  db.all(`SELECT * FROM people WHERE first_name = "${nameSearch}"`,
+ // DON'T DO THIS: 
+ // db.all(`SELECT * FROM people WHERE first_name = "${nameSearch}"`,
+ // Instead do this  
+ db.all(`SELECT * FROM people WHERE first_name = ?`, nameSearch,
     (err, allRows) => {
       if(err){
         console.log("db error: " + err)
