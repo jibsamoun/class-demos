@@ -4,7 +4,7 @@ let models = {};
 
 console.log("connecting to db");
 
-await mongoose.connect("mongodb+srv://jibrilsamoun:pa55word@cluster0.ou4vk.mongodb.net/playlists?retryWrites=true&w=majority&appName=Cluster0");
+await mongoose.connect(); // MongoDB URI key goes here
 
 console.log("connected to db!")
 
