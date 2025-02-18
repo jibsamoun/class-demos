@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import sessions from 'express-session';
+import sessions from 'express-session'; // needdat
 
 import usersRouter from './routes/users.js';
 
@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const oneDay = 1000 * 60 * 60 * 24;
+const oneDay = 1000 * 60 * 60 * 24; // When cookie expires
 
 app.use(sessions({
     secret: "my secret is super secret lkadsglkjah",
@@ -30,5 +30,9 @@ app.use(sessions({
 }))
 
 app.use('/users', usersRouter);
+
+app.listen(3001, 'localhost', () => {
+    console.log('App listening at http://localhost:3000')
+})
 
 export default app;
